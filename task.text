@@ -1,0 +1,6 @@
+Task da Fare:
+
+-Controlli sui post in base all'utente loggato. FINITO
+-Solo il proprietario del profilo puo modificarsi. FINITO
+-Solo il proprietario del profilo può eliminarsi. FINITO
+-Se l'utente è stato eliminato, eliminare automaticamente i suoi post. FINITO (DA VEDERE SE PUO ESSERE MIGLIORATO)
