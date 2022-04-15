@@ -1,3 +1,4 @@
+const User = require('../../user-module/model/User')
 const Post = require('../model/Post')
 const auth = require('../../../core/auth/routes/auth')
 
@@ -33,7 +34,9 @@ exports.postPost = async (req, res) => {
     try {
         
         let post = new Post(req.body)
-        post._userId = req.params.userId
+        let user = await User.findById(req.user.id)
+
+        post._userId = user.id
         await post.save()
         res.send(post)
 
@@ -45,8 +48,9 @@ exports.postPost = async (req, res) => {
 //Controllo se il post sia stato creato dall'utente loggato
 exports.checkPostAuth = async (req, res, next) =>{
 
-    const currentUserId = req.params.userId
-    
+
+    let user = await User.findById(req.user.id)
+
     Post.findById(req.params.id, (err, post) => {
         if(err){
             console.log(err)
@@ -57,7 +61,7 @@ exports.checkPostAuth = async (req, res, next) =>{
                 message: 'Post not Found'
             });
         }
-        if(post._userId !== currentUserId){ 
+        if(post._userId !== user.id){ 
             return res.status(401).json({
               message: 'Unauthorized'
             });

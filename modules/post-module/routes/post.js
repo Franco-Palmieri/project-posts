@@ -10,9 +10,9 @@ router.get('/:id', postController.getPost)
 
 router.get('/myposts/:userId', postController.getPostsOfUser)
 
-router.post('/:userId', passportSetting.isAuth, postController.postPost)
-router.put('/:id/:userId', passportSetting.isAuth, postController.checkPostAuth, postController.putPost)
+router.post('/', passportSetting.isAuth, postController.postPost)
+router.put('/:id', passportSetting.isAuth, postController.checkPostAuth, postController.putPost)
 
-router.delete('/:id/:userId', postController.checkPostAuth, postController.deletePost)
+router.delete('/:id', postController.checkPostAuth, postController.deletePost)
 
 module.exports = router
