@@ -5,7 +5,7 @@ const session = require('express-session')
 const passport = require('passport')
 const passportSetting = require('./core/settings/passport')
 const app = express()
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 
 require('./core/settings/passport')
@@ -17,7 +17,7 @@ app.use(cors())
 app.use(express.json())
 
 
-app.use(session({ secret: 'SECRET', resave: true, saveUninitialized: true }));
+app.use(session({ secret: 'SECRET', resave: false, saveUninitialized: true, cookie: {maxAge: 1800 * 1000} })); //cookie autologout dopo 30 minuti da perfezionare con token
 
 app.use(passport.initialize());
 app.use(passport.session());

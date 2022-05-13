@@ -9,7 +9,7 @@ router.get(
         message: 'You made it to the secure route',
         user: req.user,
         token: req.query.secret_token
-      })
+      });
     }
   );
   
