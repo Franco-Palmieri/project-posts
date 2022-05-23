@@ -16,10 +16,10 @@ exports.getPosts = async (req, res) => {
 }
 
 exports.getPostsOfUser = async (req, res) =>{
-  
     try{
-        
-        let user = await User.findById(req.user.id);
+
+        let user = await User.findById(req.user);
+        console.log(user)
         let posts = await Post.find({_userId: user.id});
         res.json(posts);
 
@@ -92,7 +92,7 @@ exports.getPost = async(req, res) => {
 
     try {
 
-        let post = await new Post.findById(req.params._id);
+        let post = await Post.findById(req.params.id);
         res.json(post);
 
     }catch(error){

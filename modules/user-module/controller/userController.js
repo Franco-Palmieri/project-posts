@@ -36,7 +36,7 @@ exports.postUser = async (req, res) => {
 exports.putUser = async (req, res) => {
 
     try{
-
+        
         const new_user = {...req.body};
         let user = await User.findById(req.user.id);
       

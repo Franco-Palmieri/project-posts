@@ -8,3 +8,12 @@ Task da Fare:
 
 -Cookie autologout da perfezionare col token
 -Provare expiresIn (controller auth.js)
+
+
+
+-controllare rotta myposts FATTA
+-getMyInfo unhautorized in profileComponent FATTA
+
+
+-controllare ogni chiamata http con middleware isAuth e
+ cambiarla per verifyToken (passport.js controller)

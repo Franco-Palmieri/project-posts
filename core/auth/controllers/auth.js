@@ -5,12 +5,7 @@ const jwt = require('jsonwebtoken');
 
 exports.postSignup = (req, res, next) =>{
 
-    const new_user = new User ({
-        email: req.body.email,
-        name: req.body.name,
-        surname: req.body.surname,
-        password: req.body.password
-    })
+    const new_user = {...req.body};
 
     User.findOne({email: req.body.email}, (err, userExist)=>{
 
@@ -25,8 +20,9 @@ exports.postSignup = (req, res, next) =>{
             req.logIn(new_user, (err)=>{
                 if(err){
                     next(err);
-                }
-                res.send("L'utente è stato creato");
+                }//secretkey
+                const token = jwt.sign({_id: new_user._id}, 'TOP_SECRET');
+                res.status(200).json({token});
             })
         })
     })

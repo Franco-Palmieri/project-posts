@@ -10,10 +10,10 @@ const passportSetting = require('../../settings/passport');
 router.post('/signup', auth.postSignup);
 router.post('/login', auth.postLogin);
 
-router.get('/logout', passportSetting.isAuth, auth.logout);
+router.get('/logout', passportSetting.verifyToken, auth.logout);
 
 
-router.get('/userInfo', passportSetting.isAuth, (req, res)=>{
+router.get('/userInfo', passportSetting.verifyToken, (req, res)=>{
     res.json({
         message: 'Queste sono le tue info',
         user: req.user,

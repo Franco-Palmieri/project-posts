@@ -3,6 +3,8 @@ const localStrategy = require('passport-local').Strategy;
 const User = require('../../modules/user-module/model/User');
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
+const jwt = require('jsonwebtoken');
+
 
 passport.serializeUser((user, done) =>{
     done(null, user._id);
@@ -20,7 +22,7 @@ passport.deserializeUser((id, done)=>{
 //  l'accesso ( TOP_SECRET). Se il token è valido, i dettagli dell'utente vengono passati al middleware successivo.
 passport.use(new JWTstrategy(
     {
-        secretOrKey: 'TOP SECRET',
+        secretOrKey: 'TOP_SECRET',
         jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
     },
         async(token, done)=>{
@@ -53,9 +55,25 @@ passport.use(new localStrategy (
 ))
 
 exports.isAuth = (req, res, next) =>{
+
     if(req.isAuthenticated()){
         return next();
     }else{
         res.status(401).send('Devi fare il login');
     }
 }
+
+exports.verifyToken = (req, res, next) => {
+    if(!req.headers.authorization){
+        return res.status(401).send('Unhautorized');
+    }
+    const token = req.headers.authorization.split(' ')[1];
+    if(token == 'null'){
+        return res.status(401).send('Unhautorized');
+    }
+    const payload = jwt.verify(token, 'TOP_SECRET');
+    req.user = payload.user._id;
+    next();
+}
+
+
